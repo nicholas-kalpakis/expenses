@@ -17,7 +17,7 @@ const ExpenseItem = (props) => {
 			<div className="expense-item__description">
 				<h2>{props.title}</h2>
 				<div className="expense-item__price">${props.price}</div>
-				<img onClick={() => props.deleteExpense(props.id)} className="trash-icon" src="https://img.icons8.com/ios/50/000000/trash--v1.png"/>
+				<img alt="delete" onClick={() => props.deleteExpense(props.id)} className="trash-icon" src="https://img.icons8.com/ios/50/000000/trash--v1.png"/>
 			</div>
 		</Card>
 	)
