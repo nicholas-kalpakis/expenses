@@ -7,7 +7,6 @@ const Slider = (props) => {
 			<div className="slider-container">
 				<input className="month-slider" type="range" min="1" max="12" value={props.sliderValue} onChange={props.sliderEvent} />
 			</div>
-			
 		</div>
 		
 	)
