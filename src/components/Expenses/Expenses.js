@@ -1,39 +1,147 @@
 import ExpenseItem from "./ExpenseItem"
 import './Expneses.css';
-import Card from '../../UI/Card';
+import Card from '../UI/Card';
+import NewExpense from './NewExpense/NewExpense';
+import { useState } from 'react';
+import Slider from '../UI/Slider';
+import EmptyExpense from './EmptyExpense';
 
 const Expenses = () => {
 
-	const expenses = [
-		{
-			title: 'Car Insurance',
-			price: 294,
-			date: new Date(2021, 2, 27)
-		},
-		{
-			title: 'Rent',
-			price: 800.00,
-			date: new Date(2021, 2, 27)
-		},
-		{
-			title: 'Phone Bill',
-			price: 105.00,
-			date: new Date(2021, 2, 27)
-		},
-		{
-			title: 'Cable & Wifi',
-			price: 120,
-			date: new Date(2021, 2, 27)
-		}
-	]
+	const [expenses, setExpenses] = useState([{
+		id: Math.random(),
+		title: 'Car Insurance',
+		price: 125,
+		date: new Date(2021, 2, 27)
+	},
+	{
+		id: Math.random(),
+		title: 'Rent',
+		price: 800.00,
+		date: new Date(2021, 2, 27)
+	},
+	{
+		id: Math.random(),
+		title: 'Phone Bill',
+		price: 105.00,
+		date: new Date(2021, 2, 27)
+	},
+	{
+		id: Math.random(),
+		title: 'Cable & Wifi',
+		price: 120,
+		date: new Date(2021, 2, 27)
+	}])
 
-	const expenseItems = expenses.map((expense) => {
-		return <ExpenseItem title={expense.title} date={expense.date} price={expense.price}></ExpenseItem>
+	
+
+	const [month, setMonth] = useState('March')
+	const [sliderValue, setSliderValue] = useState("3")
+	const sliderEvent = (event) => {
+		let value = event.target.value;
+		switch(value) {
+			case "1": {
+				setMonth("January") 
+				setSliderValue("1")
+				return
+			}
+			case "2": {
+				setMonth("February")
+				setSliderValue("2")
+				return
+			}
+			case "3": {
+				setMonth("March")
+				setSliderValue("3")
+				return
+			} 
+			case "4": {
+				setMonth("April")
+				setSliderValue("4")
+				return
+			}
+			case "5": {
+				setMonth("May")
+				setSliderValue("5")
+				return
+			}
+			case "6": {
+				setMonth("June")
+				setSliderValue("6")
+				return
+			}
+			case "7": {
+				setMonth("July")
+				setSliderValue("7")
+				return
+			}
+			case "8": {
+				setMonth("August")
+				setSliderValue("8")
+				return
+			}
+			case "9": {
+				setMonth("September")
+				setSliderValue("9")
+				return
+			}
+			case "10": {
+				setMonth("October")
+				setSliderValue("10")
+				return
+			}
+			case "11": {
+				setMonth("November")
+				setSliderValue("11")
+				return
+			}
+			case "12": {
+				setMonth("December")
+				setSliderValue("12")
+				return
+			}
+			default: {
+			}
+		}
+	}
+
+	const addExpense = (expense) => {
+		setExpenses((previousState) => {
+			return [
+				...previousState,
+				expense
+			]
+		})
+	}
+
+	const deleteExpense = (id) => {
+		const expenseIndexToDelete = expenses.findIndex(expense => {
+			return expense.id === id
+		})
+		const updatedExpenses = expenses.slice();
+		updatedExpenses.splice(expenseIndexToDelete,1);
+		
+		setExpenses(updatedExpenses);
+	}
+	
+
+	const monthExpenseItems = expenses.filter(expense => {
+		return expense.date.toLocaleString('en-US', { month: 'long'}) === month
+	});
+
+	const expenseItems = monthExpenseItems.map((expense) => {
+		return <ExpenseItem deleteExpense={deleteExpense} id={expense.id} title={expense.title} date={expense.date} price={expense.price}></ExpenseItem>
 	})
+
 	return (
-		<Card className="expenses">
-			{expenseItems}
-		</Card>
+		<div>
+			<NewExpense addExpense={(expense) => {addExpense(expense)}}/>
+			<Slider sliderValue={sliderValue} month={month} sliderEvent={sliderEvent}></Slider>
+			{expenseItems.length > 0 ? 
+				<Card className="expenses" month={month}>
+					{expenseItems}
+				</Card> : <Card className="expenses"><EmptyExpense/></Card> }
+		</div>
 	)
 }
 
