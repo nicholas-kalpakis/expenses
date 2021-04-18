@@ -1,0 +1,27 @@
+.chart-bar-container {
+	margin-left: 30px;
+	margin-right: 30px;
+	margin-bottom: 16px;
+}
+.chart-bar {
+	width:12px;
+	height:100px;
+	background-color: grey;
+	border-radius: 16px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+
+.chart-bar-fill {
+	height: 50%;
+	width: 100%;
+	background-color: blueviolet;
+	display: flex;
+	border-radius: 16px;
+}
+
+.chart-bar-month {
+	display: flex;
+	justify-content: center;
+}

@@ -5,35 +5,11 @@ import NewExpense from './NewExpense/NewExpense';
 import { useState } from 'react';
 import Slider from '../UI/Slider';
 import EmptyExpense from './EmptyExpense';
-
+import Chart from '../UI/Chart/Chart';
+import { ExpensesData, mapNumToMonth, MONTHS } from './ExpensesData';
 const Expenses = () => {
 
-	const [expenses, setExpenses] = useState([{
-		id: Math.random(),
-		title: 'Car Insurance',
-		price: 125,
-		date: new Date(2021, 2, 27)
-	},
-	{
-		id: Math.random(),
-		title: 'Rent',
-		price: 800.00,
-		date: new Date(2021, 2, 27)
-	},
-	{
-		id: Math.random(),
-		title: 'Phone Bill',
-		price: 105.00,
-		date: new Date(2021, 2, 27)
-	},
-	{
-		id: Math.random(),
-		title: 'Cable & Wifi',
-		price: 120,
-		date: new Date(2021, 2, 27)
-	}])
-
-	
+	const [expenses, setExpenses] = useState(ExpensesData)
 
 	const [month, setMonth] = useState('March')
 	const [sliderValue, setSliderValue] = useState("3")
@@ -105,6 +81,29 @@ const Expenses = () => {
 		}
 	}
 
+
+	const chartData = {};
+
+	for (const expense of expenses) {
+		const monthNum = expense.date.getMonth();
+		const expensePrice = expense.price;
+		const month = mapNumToMonth(monthNum);
+		if (chartData[month] === undefined){
+			chartData[month] = expensePrice
+			
+		}
+		else {
+			chartData[month] = chartData[month] + expensePrice
+		}
+
+		if (chartData['max'] === undefined) {
+			chartData['max'] = expensePrice
+		}
+		else if (chartData['max'] < chartData[month]) {
+				chartData['max'] = chartData[month]
+		}
+	}
+
 	const addExpense = (expense) => {
 		setExpenses((previousState) => {
 			return [
@@ -136,6 +135,7 @@ const Expenses = () => {
 	return (
 		<div>
 			<NewExpense addExpense={(expense) => {addExpense(expense)}}/>
+			<Chart chartData={chartData}></Chart>
 			<Slider sliderValue={sliderValue} month={month} sliderEvent={sliderEvent}></Slider>
 			{expenseItems.length > 0 ? 
 				<Card className="expenses" month={month}>
