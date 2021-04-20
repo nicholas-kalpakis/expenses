@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Slider from '../UI/Slider';
 import EmptyExpense from './EmptyExpense';
 import Chart from '../UI/Chart/Chart';
-import { ExpensesData, mapNumToMonth, MONTHS } from './ExpensesData';
+import { ExpensesData, mapNumToMonth } from './ExpensesData';
 const Expenses = () => {
 
 	const [expenses, setExpenses] = useState(ExpensesData)
