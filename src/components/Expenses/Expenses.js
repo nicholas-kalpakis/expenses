@@ -85,7 +85,7 @@ const Expenses = () => {
 	const chartData = {};
 
 	for (const expense of expenses) {
-		const monthNum = expense.date.getMonth();
+		const monthNum = expense.date.getMonth() + 1;
 		const expensePrice = expense.price;
 		const month = mapNumToMonth(monthNum);
 		if (chartData[month] === undefined){
